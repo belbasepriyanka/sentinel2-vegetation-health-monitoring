@@ -1,5 +1,7 @@
 # Sentinel-2 Vegetation Health Monitoring
 
+![Project preview](assets/preview.svg)
+
 A reproducible Earth observation workflow for monitoring vegetation condition with Sentinel-2 multispectral imagery.
 
 ## Why this repository matters
