@@ -1,33 +1,61 @@
-# Sentinel-2 Vegetation Health Monitoring
+# Dragon Fruit Nutrient & Stress Decision Support
 
-![Project preview](assets/preview.svg)
+**Soil + tissue + hyperspectral/vegetation indicators + ML + precision agriculture**
 
-A reproducible Earth observation workflow for monitoring vegetation condition with Sentinel-2 multispectral imagery.
+This repository extends Sentinel-2 vegetation monitoring into a complete **nutrient/stress analytics and scouting decision-support demonstration**.
 
-## Why this repository matters
-This project demonstrates a complete remote-sensing workflow: satellite data access, spectral-index calculation, temporal anomaly detection, visualization, and reproducible testing.
+> **Transparency:** all public CSV values, risk scores, and model metrics are synthetic demonstration outputs. They are not unpublished research measurements and are not fertilizer or crop-diagnosis recommendations.
 
-## Skills demonstrated
-- Sentinel-2 / multispectral Earth observation
-- NDVI, NDRE, GNDVI and NDWI
-- Time-series vegetation monitoring
-- Basic stress/anomaly detection
-- Python, Pandas, NumPy and Matplotlib
-- Google Earth Engine
-- Reproducible project structure and CI
+## Recruiter summary
 
-## Run locally
-```bash
-pip install -r requirements.txt
-python src/demo.py
-pytest -q
+- Integrates soil N/P/K, tissue N/P/K, weather, canopy moisture, NDVI, NDRE, NDMI, red-edge slope, NIR, and SWIR features
+- Random Forest stress classification
+- Tissue-N regression from nutrient + spectral variables
+- Isolation Forest spectral anomaly scoring
+- 0–100 scouting risk score and Normal / Monitor / Inspect priority
+- Sentinel-2 Google Earth Engine workflow
+- Streamlit decision-support dashboard
+- reproducible script, notebook, figures, results, and tests
+
+## Visual results
+
+| Nutrient–spectral relationship | Stress classification |
+|---|---|
+| ![relationship](figures/nutrient_spectral_relationship.svg) | ![matrix](figures/confusion_matrix.svg) |
+
+![Scouting priority](figures/scouting_priority.svg)
+
+## Workflow
+
+```mermaid
+flowchart LR
+ A[Soil nutrients] --> E[Feature table]
+ B[Tissue nutrients] --> E
+ C[NDVI / NDRE / NDMI + spectral features] --> E
+ D[Weather + moisture] --> E
+ E --> F[Random Forest]
+ E --> G[Isolation Forest]
+ F --> H[Stress probability]
+ F --> I[Nutrient prediction]
+ G --> J[Anomaly score]
+ H --> K[0–100 risk score]
+ J --> K
+ K --> L[Normal / Monitor / Inspect]
 ```
 
-## Data note
-The Python demo generates synthetic time-series data so the repository is fully reproducible. The GEE script is the pathway for applying the workflow to real Sentinel-2 imagery.
+## Run
 
-## Potential applications
-Crop monitoring, drought/stress screening, restoration monitoring, vegetation phenology, and environmental change assessment.
+```bash
+pip install -r requirements.txt
+python scripts/run_demo.py
+python -m pytest -q
+streamlit run dashboard/app.py
+```
 
-## Author
-Priyanka Belbase | Remote Sensing | GIS | Earth Observation | Geospatial AI
+## Decision question
+
+**Can field, nutrient, and spectral indicators be combined into a reproducible early-warning workflow that prioritizes which plants or fields should be inspected first?**
+
+## Scientific boundary
+
+The dashboard is a decision-support demonstration, not a nutrient diagnosis. Operational transfer requires crop-specific calibration, field/lab ground truth, and independent validation.

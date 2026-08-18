@@ -1,21 +1,7 @@
-import pandas as pd
+def normalized_difference(a,b,eps=1e-12):
+    return (a-b)/(a+b+eps)
 
-EPS = 1e-9
-
-def safe_ratio(a, b):
-    return a / (b + EPS)
-
-def add_indices(df: pd.DataFrame) -> pd.DataFrame:
-    out = df.copy()
-    out["NDVI"] = safe_ratio(out["B8"] - out["B4"], out["B8"] + out["B4"])
-    out["NDRE"] = safe_ratio(out["B8"] - out["B5"], out["B8"] + out["B5"])
-    out["GNDVI"] = safe_ratio(out["B8"] - out["B3"], out["B8"] + out["B3"])
-    out["NDWI"] = safe_ratio(out["B3"] - out["B8"], out["B3"] + out["B8"])
-    return out
-
-def add_ndvi_anomaly(df: pd.DataFrame, window: int = 5) -> pd.DataFrame:
-    out = df.copy()
-    baseline = out["NDVI"].rolling(window=window, center=True, min_periods=2).median()
-    out["NDVI_anomaly"] = out["NDVI"] - baseline
-    out["stress_flag"] = out["NDVI_anomaly"] < -0.08
-    return out
+def ndvi(nir,red): return normalized_difference(nir,red)
+def ndre(nir,red_edge): return normalized_difference(nir,red_edge)
+def gndvi(nir,green): return normalized_difference(nir,green)
+def ndmi(nir,swir1): return normalized_difference(nir,swir1)
