@@ -2,6 +2,8 @@
 
 **Soil + tissue + hyperspectral/vegetation indicators + ML + precision agriculture**
 
+**Timeline:** Research development **2024–2026** • Public GitHub portfolio implementation **2026**
+
 This repository extends Sentinel-2 vegetation monitoring into a complete **nutrient/stress analytics and scouting decision-support demonstration**.
 
 > **Transparency:** all public CSV values, risk scores, and model metrics are synthetic demonstration outputs. They are not unpublished research measurements and are not fertilizer or crop-diagnosis recommendations.
