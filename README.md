@@ -2,15 +2,13 @@
 
 **Soil + tissue + hyperspectral/vegetation indicators + ML + precision agriculture**
 
-**Timeline:** Research development **2024–2026** • Public GitHub portfolio implementation **2026**
-
 This repository extends Sentinel-2 vegetation monitoring into a complete **nutrient/stress analytics and scouting decision-support demonstration**.
 
 > **Transparency:** all public CSV values, risk scores, and model metrics are synthetic demonstration outputs. They are not unpublished research measurements and are not fertilizer or crop-diagnosis recommendations.
 
 ## Real public-data extension
 
-The repository now also includes a **real Sentinel-2 Level-2A South Florida vegetation-monitoring workflow** using the official `COPERNICUS/S2_SR_HARMONIZED` Earth Engine collection.
+The repository also includes a **real Sentinel-2 Level-2A South Florida vegetation-monitoring workflow** using the official `COPERNICUS/S2_SR_HARMONIZED` Earth Engine collection.
 
 - Real Earth Engine script: [`gee/south_florida_real_case.js`](gee/south_florida_real_case.js)
 - Case-study documentation: [`docs/real_sentinel2_case_study.md`](docs/real_sentinel2_case_study.md)
@@ -22,7 +20,7 @@ The repository now also includes a **real Sentinel-2 Level-2A South Florida vege
 
 The AOI is a public demonstration region and should be replaced with a verified field boundary for agronomic interpretation.
 
-## Recruiter summary
+## Technical highlights
 
 - Integrates soil N/P/K, tissue N/P/K, weather, canopy moisture, NDVI, NDRE, NDMI, red-edge slope, NIR, and SWIR features
 - Random Forest stress classification
@@ -74,6 +72,10 @@ For the real public-data workflow, open [`gee/south_florida_real_case.js`](gee/s
 ## Decision question
 
 **Can field, nutrient, and spectral indicators be combined into a reproducible early-warning workflow that prioritizes which plants or fields should be inspected first?**
+
+## Research context
+
+This project reflects ongoing work combining plant and soil nutrients, spectral indicators, vegetation indices, environmental measurements, GIS and remote sensing for crop monitoring and decision support.
 
 ## Scientific boundary
 
