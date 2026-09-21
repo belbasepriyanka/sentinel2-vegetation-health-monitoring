@@ -1,8 +1,64 @@
-# GeoAI Multi-Sensor Crop Stress Intelligence
+<h1 align="center">GeoAI Multi-Sensor Crop Stress Intelligence</h1>
+<p align="center"><strong>Satellite + UAV + Hyperspectral Data Fusion for Precision Agriculture</strong></p>
+<p align="center">From Earth observation to interpretable crop-stress predictions and scouting priorities.</p>
 
-**Python • scikit-learn • Sentinel-2 • spectral features • environmental data • spatial validation • decision support**
+<p align="center">
+  <a href="#run-the-spatial-validation-demo">Run demo</a> ·
+  <a href="multisensor/README.md">Multi-sensor methodology</a> ·
+  <a href="gee/south_florida_real_case.js">Real Sentinel-2 workflow</a> ·
+  <a href="https://github.com/belbasepriyanka">Author's GitHub</a>
+</p>
 
-A recruiter-facing portfolio implementation of a multi-sensor crop-stress workflow designed to move from raw Earth-observation and field indicators to **repeatable machine-learning analysis, uncertainty-aware interpretation, and scouting-priority outputs**.
+![Multi-sensor crop-stress project preview](assets/preview.svg)
+
+> **Data transparency:** This repository provides a real public Sentinel-2 processing script and a separate synthetic multi-sensor ML demonstration. The infographic metrics (0.87 accuracy, 0.85 F1, 0.92 ROC-AUC and 0.18 RMSE) are illustrative and are **not** measured performance from the committed workflow. Consult generated `validation_metrics.json` for reproducible demonstration results. No field-validated multi-sensor model or operational agronomic advice is claimed.
+
+## The questions this project addresses
+
+- Where is potential crop stress emerging across an area of interest?
+- How uncertain is the model's predicted stress probability?
+- Which inputs are associated with the modeled risk?
+- Which locations should be inspected first by a field specialist?
+
+## Five data streams, one decision-support workflow
+
+| Data stream | Representative variables | Current public implementation |
+|---|---|---|
+| Satellite / Sentinel-2 | NDVI, NDRE, EVI, NDWI, vegetation moisture indices | Real Level-2A South Florida Earth Engine script (NDVI, NDRE, NDMI, GNDVI); synthetic NDVI/NDRE/EVI/NDWI features in multi-sensor demo |
+| UAV | Canopy structure and texture | Simulated features; real-data integration designed, not yet verified |
+| Hyperspectral | Red-edge slope, NIR reflectance, water-sensitive indicators | Simulated features; no measured hyperspectral cube in public demo |
+| Soil and field | Soil moisture, soil N, field observations | Simulated features; ground-truth integration is future work |
+| Weather | Rainfall and temperature | Simulated features; time-aligned weather ingestion is future work |
+
+**Pipeline:** sensor inputs → QA/QC and feature engineering → spatially grouped Random Forest validation → held-out stress probabilities → uncertainty proxy and feature importance → risk classes → GIS-ready scouting-priority points.
+
+## Run the spatial-validation demo
+
+From the repository root, using Python 3.11 or newer:
+
+```bash
+pip install -r requirements.txt
+python multisensor/run_demo.py
+python -m pytest multisensor/tests -q
+```
+
+The standalone workflow in [`multisensor/run_demo.py`](multisensor/run_demo.py) generates fictional spatial samples, keeps the same spatial blocks out of training and validation, and exports:
+
+| Output | Purpose |
+|---|---|
+| `multisensor/outputs/spatial_cv_predictions.csv` | Held-out probabilities, risk classes, block IDs and priorities |
+| `multisensor/outputs/scouting_priority_points.geojson` | Open in ArcGIS Pro or QGIS to inspect fictional priority points |
+| `multisensor/outputs/validation_metrics.json` | Synthetic accuracy, F1, ROC-AUC, Brier score and fold membership |
+| `multisensor/outputs/feature_importance.csv` | Exploratory Random Forest feature rankings |
+| `multisensor/outputs/synthetic_multisensor_inputs.csv` | Generated features, fictional coordinates and labels |
+
+**Validation:** Five-fold GroupKFold with disjoint spatial blocks reduces direct spatial group overlap. The provided uncertainty measure is tree disagreement, not calibrated uncertainty; feature importance is association, not proof of a physical stress driver.
+
+The existing [real Sentinel-2 case study](docs/real_sentinel2_case_study.md) demonstrates a separate public-data pathway. It does not automatically feed real imagery into the synthetic model. See the [multi-sensor methods and real-data ingestion contract](multisensor/README.md).
+
+---
+
+## Existing satellite and nutrient-stress workflows
 
 > **Portfolio note:** GitHub commit dates reflect when public code and documentation were published or maintained. They are not intended to represent the start date of the underlying research or analytical work.
 
