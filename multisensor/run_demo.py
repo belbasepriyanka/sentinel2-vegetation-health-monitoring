@@ -82,7 +82,7 @@ def grouped_prediction(df: pd.DataFrame):
         probabilities[valid_idx] = model.predict_proba(x.iloc[valid_idx])[:, 1]
         # Indicative tree disagreement only; NOT calibrated predictive uncertainty.
         tree_probs = np.array([
-            tree.predict_proba(x.iloc[valid_idx])[:, 1] for tree in model.estimators_
+            tree.predict_proba(x.iloc[valid_idx].to_numpy())[:, 1] for tree in model.estimators_
         ])
         disagreement[valid_idx] = tree_probs.std(axis=0)
         fold_number[valid_idx] = fold
